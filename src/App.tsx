@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAccount, useDisconnect } from 'wagmi';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+  const { address, isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
+
+  if (isConnected)
+    return (
+      <div>
+        Connected to {address}
+        <button onClick={() => disconnect()}>Disconnect</button>
+      </div>
+    );
+
+  return <ConnectButton />;
+};
 
 export default App;
